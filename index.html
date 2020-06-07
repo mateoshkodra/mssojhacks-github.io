@@ -1,0 +1,218 @@
+<html>
+    <head>
+        <title> Name of Website </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+         <link rel="stylesheet" href="w3.css">
+
+
+         
+         <script defer src="/socket.io/socket.io.js"></script>
+        <script defer src="lobbies.js"></script>
+        <script defer src="main.js"></script>
+        <script type="text/javascript">
+
+
+            //this function gets called by the button
+            function grabText(){
+                //use an object to hold all the input values
+                var userData = {
+                    //get data from the input tag using .getElementById().value
+                    lobbyName: document.getElementById("lobby-name").value,
+                    password: document.getElementById("lobby-password").value,
+                    name: document.getElementById("name").value
+                };
+                //output it onto the console for you to see
+                console.log(userData.lobbyName + ", " + userData.password + ", " + userData.name);
+            }
+        </script>
+                <style>
+            .button{
+                border: #000;
+                color: white;
+                margin: 200px 120px; 
+                padding: 75px 100px; 
+                display: inline-block;
+                font-size: 32px;
+                cursor: pointer; 
+            }
+            .button1{background-color: #4CAF50;}
+            .button2{background-color: #008CBA;}
+            .form-container {
+            max-width: 200px;
+            padding: 7px;
+            border: none;
+            background-color: #008CBA;
+            }
+            .form-container1 {
+            max-width: 200px;
+            padding: 7px;
+            border: none;
+            background-color: #4CAF50;
+            }
+            .form-container1 input[type=text], .form-container1 input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+            }  
+            .form-container input[type=text], .form-container input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+            }
+            .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: 10px;
+            }
+            .form-container .btn:hover, .open-button:hover {
+              opacity: 1;
+            } 
+            .form-container .cancel {
+            background-color: red;
+            }  
+
+
+        </style>
+    
+  
+    </head>
+    <!---form 1--->
+    <!---> <body>
+      <div id = "buttondiv">
+        <button id="button1" class="button button1 open-button"> Join a Lobby</button>
+        <button id= "button2" class="button button2 open-button"> Create a Lobby</button>
+        </div>
+
+        <div id = "modal1" class = "modal">
+          <div class = "modal-content">
+            <span class ="close">&times; </span>
+            <div class = "form-popup" id = "creating-lobby" style = "position:fixed;">
+            <form id = "create-lobby" action = "/action_page.php" class = "form-container" style="display: none;" >
+
+            <header id = "headerform1">Create Lobby</header>
+            <label for="text" id = "lobby-name-label"> Lobby Name:</label>
+            <input type="text" id="lobby-name" placeholder="Enter Lobby Name">
+
+
+            <div id = "password">
+                <label for ="text" id = "lobby-password-label"> Password:</label>
+                <input type = "text" id = "lobby-password" placeholder = "Enter password">
+            </div>
+
+
+            <div id = "nickname">
+                <label for = "text" id="label-for-nickname"> Nickname: </label>
+                <input type = "text" id ="name" placeholder ="Enter a Nickname">
+            </div>
+                <!--this button basically calls the function grabText() inside the javascript code -->
+                <!----
+                <button onclick="grabText()" id="submitBtn1"> Go! </button>
+            </form>
+            </div>
+
+          </div>
+
+        </div>
+        ---->
+ <div class="modal fade" id="create-lobby-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+       <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Create Lobby</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+
+      <div id = "modal1" class="modal-body">
+        <div class = "modal-content">
+          <span class="close">&times;</span>
+          <form id="create-lobby-form">
+              <div class="form-group">
+                 <label for="new-lobby-input">Lobby Name</label>
+                    <input type="text" id="new-lobby-input" class="form-control" placeholder="Enter name" required>
+                        <div class="invalid-feedback">Lobby name taken</div>
+                        </div>
+                <div class="form-group">
+                  <label for="lobby-password-input">Password</label>
+                            <input type="text" id="lobby-password-input" class="form-control" placeholder="Enter password">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Create</button> 
+                  </div>
+                </div>
+            </form>
+            </div>
+        </div>
+
+    <!---form2--->
+      <div class = "form-popup" id = "joining-lobby" style = "position:fixed; left: 510px; top: 250px">
+
+        <form id = "join-lobby" action = "/action_page.php" class = "form-container1" style = "display: none;">
+
+          <header id ='headerforform2'> Join a Lobby </header>
+          <label for "text" id = "lobby-name-label-2"> Lobby Name: </label>
+
+          <input type="text" id="lobby-name2" placeholder="Enter Lobby Name">
+
+            <div id = "password">
+                <label for ="text" id="passwordlabel2">Password:</label>
+                <input type = "text" id = "lobby-password-2" placeholder = "Enter password">
+            </div>
+
+            <div id = "nickname">
+                <label for = "text"> Nickname: </label>
+                <input type = "text" id ="name2" placeholder ="Enter a Nickname">
+
+
+            </div>
+                <!--this button basically calls the function grabText() inside the javascript code -->
+                <button onclick="grabText()" id="submitBtn2"> Go! </button>
+        </form>
+      </div>
+
+
+    </body>
+
+
+<script>
+  function openForm() {
+  document.getElementById("create-lobby").style.display = "block";
+  document.getElementById("join-lobby").style.display = "none";
+}
+function openForm1(){
+  document.getElementById("join-lobby").style.display = "block"
+  document.getElementById("create-lobby").style.display = "none";
+}
+</script>
+
+
+<!----in-game elements--->
+<body>
+   <div id="current-lobby-div" class="col animated">
+      <div id="current-lobby-box" class="border-box">
+        <h3 id="lobby-members">Lobby Members:</h3>
+    </div>
+
+   </div>
+   
+  </div>
+
+
+
+
+
+</body>
+
+    
+
+    
+    
+</html>
